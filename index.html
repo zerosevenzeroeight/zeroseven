@@ -180,13 +180,13 @@
     <!-- EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
-        // Инициализация EmailJS (public key из EmailJS)
+        
         emailjs.init("p4_wrNx9iRyClQq61");
 
         const serviceID = "service_qokr1c9";
         const templateID = "template_4mywc8j";
 
-        // Открыть модалку
+        // Открыть 
         document.getElementById('contactLink').addEventListener('click', function (e) {
             e.preventDefault();
             document.getElementById('contactModal').style.display = 'block';
@@ -197,7 +197,7 @@
             document.getElementById('contactModal').style.display = 'none';
         });
 
-        // Закрыть по клику вне модалки
+        // Закрыть по клику
         window.addEventListener('click', function (e) {
             const modal = document.getElementById('contactModal');
             if (e.target === modal) {
@@ -205,7 +205,7 @@
             }
         });
 
-        // Отправка формы
+
         document.getElementById('simpleContactForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -217,8 +217,7 @@
             msg.textContent = '';
             msg.style.color = '';
 
-            // Эти имена ДОЛЖНЫ совпадать с плейсхолдерами в шаблоне:
-            // {{from_name}}, {{from_email}}, {{message}}
+      
             const templateParams = {
                 from_name: document.getElementById('userName').value,
                 from_email: document.getElementById('userEmail').value,
