@@ -137,15 +137,12 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
-    // Твои ID из EmailJS
-    emailjs.init("p4_wrNx9iRyClQq61");
-    var serviceID = "service_qokr1c9";
-    var templateID = "template_4mywc8j";
-    
-    console.log("EmailJS инициализирован");
-    console.log("Service ID:", serviceID);
-    console.log("Template ID:", templateID);
+    // Твои ID из EmailJS - ВСЁ ГОТОВО!
+    emailjs.init("p4_wrNx9iRyClQq61"); // User ID
+    var serviceID = "service_qokr1c9"; // Service ID
+    var templateID = "template_4mywc8j"; // Template ID
     
     // Обновляем ссылку "Связаться со мной"
     document.querySelector('.headerlink h').outerHTML = 
@@ -154,44 +151,41 @@
     // Открытие формы
     document.getElementById('contactLink').onclick = function(e) {
         e.preventDefault();
-        console.log("Открытие формы");
         document.getElementById('contactModal').style.display = 'block';
+    };
+    
+    // Закрытие формы
+    document.querySelector('.close-btn').onclick = function() {
+        document.getElementById('contactModal').style.display = 'none';
+    };
+    
+    // Закрытие по клику вне формы
+    window.onclick = function(e) {
+        if (e.target == document.getElementById('contactModal')) {
+            document.getElementById('contactModal').style.display = 'none';
+        }
     };
     
     // Отправка формы
     document.getElementById('simpleContactForm').onsubmit = function(e) {
         e.preventDefault();
-        console.log("Форма отправляется");
         
         var btn = document.getElementById('sendBtn');
         var msg = document.getElementById('formMessage');
-        var name = document.getElementById('userName').value;
-        var email = document.getElementById('userEmail').value;
-        var message = document.getElementById('userMessage').value;
-        
-        console.log("Данные:", {name: name, email: email, message: message});
-        
-        if (!name || !email || !message) {
-            msg.textContent = '❌ Заполните все поля';
-            msg.style.color = 'red';
-            return;
-        }
         
         btn.disabled = true;
         btn.textContent = 'Отправка...';
         msg.textContent = '';
         
         var templateParams = {
-            name: name,
-            email: email,
-            message: message
+            name: document.getElementById('userName').value,
+            email: document.getElementById('userEmail').value,
+            message: document.getElementById('userMessage').value
         };
         
-        console.log("Отправка в EmailJS...");
-        
+        // Отправляем письмо
         emailjs.send(serviceID, templateID, templateParams)
-            .then(function(response) {
-                console.log("УСПЕХ!", response);
+            .then(function() {
                 msg.textContent = '✅ Сообщение отправлено!';
                 msg.style.color = 'green';
                 document.getElementById('simpleContactForm').reset();
@@ -199,16 +193,20 @@
                     document.getElementById('contactModal').style.display = 'none';
                 }, 2000);
             }, function(error) {
-                console.error("ОШИБКА EmailJS:", error);
                 msg.textContent = '❌ Ошибка: ' + error.text;
                 msg.style.color = 'red';
+                console.error("EmailJS error:", error);
             })
             .finally(function() {
                 btn.disabled = false;
                 btn.textContent = 'Отправить';
             });
     };
+    
+    console.log("Форма обратной связи готова к работе!");
 </script>
+
+
 	
 </body>
 </html>
